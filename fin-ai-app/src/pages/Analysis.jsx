@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
-const API = import.meta.env.VITE_API_URL;
 function Analysis() {
+
+  const API = import.meta.env.VITE_API_URL;
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API}/api/analysis/demo_user`)
+      .then(res => res.json())
+      .then(result => setData(result))
+      .catch(err => console.log(err));
+  }, []);
+  
   return (
     <main className="relative z-10 pt-24 md:pt-32 pb-32 md:pb-24 px-4 md:px-10 max-w-7xl mx-auto flex flex-col gap-8">
       <div className="absolute top-[10%] right-[10%] w-[300px] h-[300px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
