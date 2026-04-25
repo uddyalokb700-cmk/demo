@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts';
-
+const API = import.meta.env.VITE_API_URL;
 const trendData = [
   { month: 'Oct', balance: 4200, spend: 3200 },
   { month: 'Nov', balance: 5100, spend: 2800 },
