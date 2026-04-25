@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+const API = import.meta.env.VITE_API_URL;
 
 function Forecast() {
   return (
