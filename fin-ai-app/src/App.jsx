@@ -10,6 +10,7 @@ import Insights from './pages/Insights';
 import SecurityPolicy from './pages/SecurityPolicy';
 
 function App() {
+  const API = import.meta.env.VITE_API_URL;
   return (
     <BrowserRouter>
       <Routes>
