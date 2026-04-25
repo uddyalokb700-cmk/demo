@@ -13,15 +13,50 @@ function Upload() {
     }
   };
 
-  const handleUpload = () => {
-    if (!file) return;
-    setIsUploading(true);
-    // Simulate an upload process
-    setTimeout(() => {
-      setIsUploading(false);
-      navigate('/analysis'); // Redirect to analysis after "upload"
-    }, 2000);
-  };
+  const handleUpload = async () => {
+  if (!file) return;
+
+  setIsUploading(true);
+
+  try {
+    const text = await file.text();
+
+    const rows = text.split("\n").slice(1).filter(Boolean);
+
+    const transactions = rows.map(row => {
+      const cols = row.split(",");
+
+      return {
+        date: cols[0]?.trim(),
+        description: cols[1]?.trim(),
+        amount: parseFloat(cols[2]),
+        type: cols[3]?.trim() || "debit"
+      };
+    });
+
+    const response = await fetch(`${API}/api/upload`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: "demo_user",
+        transactions: transactions
+      })
+    });
+
+    const data = await response.json();
+
+    localStorage.setItem("aft_upload", JSON.stringify(data));
+
+    navigate("/analysis");
+
+  } catch (error) {
+    alert("Upload failed.");
+  }
+
+  setIsUploading(false);
+};
 
   return (
     <main className="relative z-10 pt-24 md:pt-32 pb-32 md:pb-24 px-4 md:px-10 max-w-4xl mx-auto flex flex-col gap-8 items-center text-center">
