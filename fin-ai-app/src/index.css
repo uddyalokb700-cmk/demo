@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+      background-color: #0F1111;
+      color: #E0F2F1;
+      overflow-x: hidden;
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: max(884px, 100dvh);
+  }
+  h1, h2, h3, .font-manrope {
+      font-family: 'Space Grotesk', sans-serif !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0F1111;
+}
+::-webkit-scrollbar-thumb {
+  background: #50C878;
+  border-radius: 0px;
+}
+.material-symbols-outlined {
+  font-variation-settings: 'wght' 100, 'opsz' 24;
+}
