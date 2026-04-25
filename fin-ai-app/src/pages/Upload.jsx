@@ -21,7 +21,7 @@ function Upload() {
   try {
     const text = await file.text();
 
-    const rows = text.split("\n").slice(1).filter(Boolean);
+    const rows = text.split("/\r?\n/").slice(1).filter(Boolean);
 
     const transactions = rows.map(row => {
       const cols = row.split(",");
