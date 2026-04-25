@@ -28,11 +28,11 @@ function Analysis() {
         <div className="flex flex-col gap-6">
           <div className="p-6 bg-surface-container border border-white/5 min-h-[190px]">
              <h3 className="font-headline-md text-lg text-on-surface mb-2">Total Inflow</h3>
-             <span className="font-headline-xl text-secondary text-3xl">$12,450.00</span>
+             <span className="font-headline-xl text-secondary text-3xl">₹{data?.financial_summary?.total_income || 0}</span>
           </div>
           <div className="p-6 bg-surface-container border border-white/5 min-h-[190px]">
              <h3 className="font-headline-md text-lg text-on-surface mb-2">Total Outflow</h3>
-             <span className="font-headline-xl text-on-surface text-3xl">$8,230.50</span>
+             <span className="font-headline-xl text-on-surface text-3xl">₹{data?.financial_summary?.total_expense || 0}</span>
           </div>
         </div>
       </div>
