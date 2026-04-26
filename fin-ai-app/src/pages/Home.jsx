@@ -70,7 +70,7 @@ function Home() {
           </Link>
 
           <button
-            onClick={handleDemoLoad}
+            onClick={() => handleDemoLoad()}
             disabled={loading}
             className="w-full sm:w-auto px-10 py-4 border border-outline-variant text-primary font-bold uppercase tracking-widest text-xs hover:bg-white/5 transition-all disabled:opacity-50"
           >
