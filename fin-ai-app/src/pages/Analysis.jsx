@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
+
+const API = import.meta.env.VITE_API_URL || "https://aft-1-6zfr.onrender.com";
 function Analysis() {
   
-  const API = import.meta.env.VITE_API_URL;
   const chartData = data?.summary?.monthly_totals
   ? Object.entries(data.summary.monthly_totals).map(([month, value]) => ({
       month,
