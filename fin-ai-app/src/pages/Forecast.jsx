@@ -12,8 +12,11 @@ function Forecast() {
 useEffect(() => {
   fetch(`${API}/api/predict?user_id=demo_user`)
     .then(res => res.json())
-    .then(setData)
-    .catch(console.error);
+    .then(result => {
+      setData(result);
+      setLoading(false);
+    })
+    .catch(err => console.log(err));
 }, []);
   
   const forecastData = data?.forecast
