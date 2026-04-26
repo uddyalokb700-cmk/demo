@@ -36,7 +36,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         <p className="font-headline-md text-on-surface mb-1">{label}</p>
         {payload.map((entry, index) => (
           <p key={index} style={{ color: entry.color }} className="font-body-md text-sm">
-            {entry.name}: ${entry.value}
+            {entry.name}: ₹{entry.value}
           </p>
         ))}
       </div>
@@ -65,7 +65,7 @@ function Dashboard() {
         <div className="p-6 bg-surface-container-high border border-white/5 relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
           <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/5 blur-2xl group-hover:bg-primary/10"></div>
           <span className="font-label-lg text-on-surface-variant text-sm uppercase tracking-widest block mb-2">Net Worth</span>
-          <span className="font-headline-xl text-4xl text-on-surface font-bold">$142,450.00</span>
+          <span className="font-headline-xl text-4xl text-on-surface font-bold">₹142,450.00</span>
           <div className="flex items-center gap-1 mt-4 text-primary">
             <span className="material-symbols-outlined text-[16px]">trending_up</span>
             <span className="font-body-sm text-sm">+2.4% this month</span>
@@ -75,7 +75,7 @@ function Dashboard() {
         <div className="p-6 bg-surface-container border border-white/5 relative overflow-hidden group hover:border-secondary/30 transition-all duration-300">
           <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-secondary/5 blur-2xl group-hover:bg-secondary/10"></div>
           <span className="font-label-lg text-on-surface-variant text-sm uppercase tracking-widest block mb-2">Monthly Spend</span>
-          <span className="font-headline-xl text-4xl text-on-surface font-bold">$3,350.69</span>
+          <span className="font-headline-xl text-4xl text-on-surface font-bold">₹3,350.69</span>
           <div className="flex items-center gap-1 mt-4 text-secondary">
             <span className="material-symbols-outlined text-[16px]">trending_down</span>
             <span className="font-body-sm text-sm">-1.2% from last month</span>
@@ -111,7 +111,7 @@ function Dashboard() {
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#2A2F2F" vertical={false} />
                 <XAxis dataKey="month" stroke="#A8B2B2" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#A8B2B2" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => `$${val/1000}k`} />
+                <YAxis stroke="#A8B2B2" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(val) => `₹${val/1000}k`} />
                 <Tooltip content={<CustomTooltip />} />
                 <Area type="monotone" dataKey="balance" stroke="#98FF98" fillOpacity={1} fill="url(#colorBalance)" />
                 <Area type="monotone" dataKey="spend" stroke="#A8B2B2" fillOpacity={1} fill="url(#colorSpend)" />
@@ -151,7 +151,7 @@ function Dashboard() {
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[index] }}></div>
                     <span className="font-body-md text-on-surface-variant">{item.name}</span>
                   </div>
-                  <span className="font-body-md text-on-surface font-semibold">${item.value}</span>
+                  <span className="font-body-md text-on-surface font-semibold">₹{item.value}</span>
                 </div>
               ))}
             </div>
@@ -176,7 +176,7 @@ function Dashboard() {
                 </div>
               </div>
               <span className={`font-body-md text-base ${tx.amount > 0 ? 'text-primary' : 'text-on-surface'}`}>
-                {tx.amount > 0 ? '+' : '-'}${Math.abs(tx.amount).toFixed(2)}
+                {tx.amount > 0 ? '+' : '-'}₹{Math.abs(tx.amount).toFixed(2)}
               </span>
             </div>
           ))}
