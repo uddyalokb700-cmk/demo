@@ -28,7 +28,7 @@ useEffect(() => {
     ]
   : [];
 
-  if (loading) {
+if (loading) {
   return (
     <div className="pt-32 text-center text-white">
       Loading forecast...
