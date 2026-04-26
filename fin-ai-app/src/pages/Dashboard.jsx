@@ -3,7 +3,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts';
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "https://aft-1-6zfr.onrender.com";
 const trendData = [
   { month: 'Oct', balance: 4200, spend: 3200 },
   { month: 'Nov', balance: 5100, spend: 2800 },
