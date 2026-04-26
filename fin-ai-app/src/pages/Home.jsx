@@ -7,6 +7,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
 
   const handleDemoLoad = async () => {
+    console.log("VIEW DEMO CLICKED");
     if (loading) return;
 
     setLoading(true);
