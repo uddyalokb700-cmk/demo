@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "https://aft-1-6zfr.onrender.com";
 
 function Insights() {
   return (
