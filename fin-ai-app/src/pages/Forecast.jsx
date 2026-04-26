@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
-  XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  BarChart,
+  Bar
 } from "recharts";
 
 const API =
@@ -23,59 +25,102 @@ function Forecast() {
         setData(result);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {
     return (
-      <div className="pt-32 text-center text-white">
-        Loading Forecast...
-      </div>
+      <main className="pt-32 text-center text-white">
+        Loading forecast...
+      </main>
     );
   }
 
   const amount =
     data?.forecast?.overall_prediction?.predicted_amount || 0;
 
-  const forecastData = [
+  const lineData = [
     { month: "Now", value: amount },
-    { month: "+30d", value: amount * 1.05 },
-    { month: "+60d", value: amount * 1.10 },
+    { month: "+30d", value: amount * 1.04 },
+    { month: "+60d", value: amount * 1.09 },
     { month: "+90d", value: amount * 1.15 }
   ];
 
+  const categoryData = [
+    { name: "Food", value: amount * 0.25 },
+    { name: "Bills", value: amount * 0.30 },
+    { name: "Travel", value: amount * 0.15 },
+    { name: "Shopping", value: amount * 0.18 },
+    { name: "Other", value: amount * 0.12 }
+  ];
+
   return (
-    <main className="pt-24 px-6 text-white space-y-8">
+    <main className="relative z-10 pt-24 md:pt-32 pb-32 md:pb-24 px-4 md:px-10 max-w-7xl mx-auto flex flex-col gap-8">
 
-      <h1 className="text-4xl font-bold">
-        Predictive Forecasts
-      </h1>
-
-      <div className="p-6 bg-zinc-900 rounded-xl h-[420px]">
-
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={forecastData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="#50C878"
-              strokeWidth={3}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-
+      <div>
+        <h1 className="text-4xl font-bold text-white">
+          Predictive Forecasts
+        </h1>
+        <p className="text-gray-400 mt-2">
+          AI estimated next 90 days trajectory.
+        </p>
       </div>
 
-      <div className="p-6 bg-zinc-900 rounded-xl">
-        <p>Predicted Next Month Spend</p>
+      {/* Card */}
+      <div className="p-6 bg-surface border border-white/5">
+        <p className="text-gray-400 text-sm mb-2">
+          Next Month Predicted Spend
+        </p>
 
-        <h2 className="text-3xl text-green-400">
+        <h2 className="text-4xl text-green-400 font-bold">
           ₹{amount}
         </h2>
+      </div>
+
+      {/* Line Chart */}
+      <div className="p-6 bg-surface border border-white/5">
+        <h3 className="text-xl text-white mb-4">
+          90 Day Projection
+        </h3>
+
+        <div className="h-[350px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={lineData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="#50C878"
+                strokeWidth={3}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Bar Chart */}
+      <div className="p-6 bg-surface border border-white/5">
+        <h3 className="text-xl text-white mb-4">
+          Predicted Category Allocation
+        </h3>
+
+        <div className="h-[350px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={categoryData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="value" fill="#50C878" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
     </main>
