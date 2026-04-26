@@ -25,9 +25,12 @@ function Home() {
             Get Started
             <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
           </Link>
-          <button className="w-full sm:w-auto px-10 py-4 border border-outline-variant text-primary font-bold uppercase tracking-widest text-xs hover:bg-white/5 transition-all">
-            View Demo
-          </button>
+          <button
+  onClick={handleDemoLoad}
+  className="w-full sm:w-auto px-10 py-4 border border-outline-variant text-primary font-bold uppercase tracking-widest text-xs hover:bg-white/5 transition-all"
+>
+  View Demo
+</button>
         </div>
       </section>
       
