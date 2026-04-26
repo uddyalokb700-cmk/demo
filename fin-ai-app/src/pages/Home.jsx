@@ -26,11 +26,16 @@ function Home() {
       const data = await res.json();
       console.log("Demo loaded:", data);
 
-      // reload UI after loading demo data
+      if (data.status === "error") {
+        alert(data.message);
+        return;
+      }
+
       window.location.reload();
 
     } catch (err) {
       console.error("Demo load failed:", err);
+      alert("Backend not reachable. Check API URL.");
     } finally {
       setLoading(false);
     }
