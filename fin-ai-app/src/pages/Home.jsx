@@ -3,6 +3,29 @@ import { Link } from 'react-router-dom';
 
 const API = import.meta.env.VITE_API_URL;
 
+const handleDemoLoad = async () => {
+  try {
+    const res = await fetch(`${API}/api/demo-load`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: "demo_user"
+      })
+    });
+
+    const data = await res.json();
+    console.log("Demo loaded:", data);
+
+    // refresh UI (important)
+    window.location.reload();
+
+  } catch (err) {
+    console.error("Demo load failed:", err);
+  }
+};
+
 function Home() {
   return (
     <main className="relative z-10 pt-12 md:pt-32 pb-32 md:pb-24 px-4 md:px-10 max-w-7xl mx-auto flex flex-col gap-12 items-center text-center">
