@@ -26,7 +26,7 @@ function Analysis() {
     .catch(err => console.log(err));
 }, []);
 
-  if (loading) {
+if (loading) {
   return (
     <div className="pt-32 text-center text-white">
       Loading financial data...
