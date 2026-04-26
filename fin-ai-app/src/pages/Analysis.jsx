@@ -16,7 +16,7 @@ function Analysis() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-  fetch(`${API}/api/dashboard?user_id=demo_user`)
+  fetch(`${API}/api/analyze?user_id=demo_user`)
       .then(res => res.json())
       .then(result => setData(result))
       .catch(err => console.log(err));
