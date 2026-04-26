@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from 'recharts';
 
 const API = import.meta.env.VITE_API_URL;
 
