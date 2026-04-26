@@ -1,41 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Home() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleDemoLoad = async () => {
-    console.log("VIEW DEMO CLICKED");
-    if (loading) return;
+  if (loading) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const res = await fetch(`${API}/api/demo-load`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          user_id: "demo_user"
-        })
-      });
+  try {
+    const res = await fetch(`${API}/api/demo-load`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: "demo_user" })
+    });
 
-      const data = await res.json();
-      console.log("Demo loaded:", data);
+    const data = await res.json();
+    console.log("Demo loaded:", data);
 
-     if (data.status === "error") {
-      alert(data.message);
-      return;
-    }
-
-    navigate("/dashboard");
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 500);
 
   } catch (err) {
     console.error("Demo load failed:", err);
-    alert("Backend error");
   } finally {
     setLoading(false);
   }
