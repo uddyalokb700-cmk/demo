@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from 'recharts';
 function Analysis() {
-
+  
   const API = import.meta.env.VITE_API_URL;
+  const chartData = data?.summary?.monthly_totals
+  ? Object.entries(data.summary.monthly_totals).map(([month, value]) => ({
+      month,
+      value
+    }))
+  : [];
 
   const [data, setData] = useState(null);
 
@@ -22,9 +31,28 @@ function Analysis() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        <div className="lg:col-span-2 p-8 bg-surface border border-white/5 min-h-[400px] flex items-center justify-center">
-          <span className="text-on-surface-variant font-label-lg tracking-widest uppercase">Cashflow Chart Placeholder</span>
-        </div>
+  <div className="lg:col-span-2 p-8 bg-surface border border-white/5 min-h-[400px]">
+
+    {chartData.length > 0 ? (
+      <ResponsiveContainer width="100%" height={350}>
+        <AreaChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke="#50C878"
+            fill="#98FF98"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    ) : (
+      <span className="text-on-surface-variant">No data available</span>
+    )}
+
+  </div>
         <div className="flex flex-col gap-6">
           <div className="p-6 bg-surface-container border border-white/5 min-h-[190px]">
              <h3 className="font-headline-md text-lg text-on-surface mb-2">Total Inflow</h3>
