@@ -26,20 +26,20 @@ function Home() {
       const data = await res.json();
       console.log("Demo loaded:", data);
 
-      if (data.status === "error") {
-        alert(data.message);
-        return;
-      }
-
-      window.location.reload();
-
-    } catch (err) {
-      console.error("Demo load failed:", err);
-      alert("Backend not reachable. Check API URL.");
-    } finally {
-      setLoading(false);
+     if (data.status === "error") {
+      alert(data.message);
+      return;
     }
-  };
+
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.error("Demo load failed:", err);
+    alert("Backend error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <main className="relative z-10 pt-12 md:pt-32 pb-32 md:pb-24 px-4 md:px-10 max-w-7xl mx-auto flex flex-col gap-12 items-center text-center">
