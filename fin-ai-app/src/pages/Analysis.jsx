@@ -14,13 +14,17 @@ function Analysis() {
   : [];
 
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
   fetch(`${API}/api/analyze?user_id=demo_user`)
-      .then(res => res.json())
-      .then(result => setData(result))
-      .catch(err => console.log(err));
-  }, []);
+    .then(res => res.json())
+    .then(result => {
+      setData(result);
+      setLoading(false);
+    })
+    .catch(err => console.log(err));
+}, []);
   
   return (
     <main className="relative z-10 pt-24 md:pt-32 pb-32 md:pb-24 px-4 md:px-10 max-w-7xl mx-auto flex flex-col gap-8">
