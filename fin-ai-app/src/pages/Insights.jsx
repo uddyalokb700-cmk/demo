@@ -1,7 +1,3 @@
-// FINAL CRASH-PROOF Insights.jsx
-// Fixes: a.map is not a function
-// Cause: backend sometimes returns object/string instead of array
-
 import React, { useEffect, useState } from "react";
 
 const API =
