@@ -16,36 +16,44 @@ function Forecast() {
 
   useEffect(() => {
     fetch(`${API}/api/predict?user_id=demo_user`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         const forecast = data.forecast || {};
-        const overall = forecast.predicted_amount || 0;
-        const band = forecast.confidence_band || {};
+        const overall =
+          forecast.overall_prediction?.predicted_amount || 0;
+
+        const band =
+          forecast.overall_prediction?.confidence_band || {};
+
+        const lowBase = band.low || overall * 0.82;
+        const highBase = band.high || overall * 1.12;
 
         const arr = [
           {
             day: '30D',
-            predicted: overall * 0.82,
-            low: (band.low || overall * 0.72) * 0.82,
-            high: (band.high || overall * 0.92) * 0.82
+            predicted: overall * 0.88,
+            low: lowBase * 0.88,
+            high: highBase * 0.88
           },
           {
             day: '60D',
-            predicted: overall * 0.93,
-            low: (band.low || overall * 0.72) * 0.93,
-            high: (band.high || overall * 0.92) * 0.93
+            predicted: overall * 0.95,
+            low: lowBase * 0.95,
+            high: highBase * 0.95
           },
           {
             day: '90D',
             predicted: overall,
-            low: band.low || overall * 0.72,
-            high: band.high || overall * 0.92
+            low: lowBase,
+            high: highBase
           }
         ];
 
         setChartData(arr);
       })
-      .catch(console.error);
+      .catch(() => {
+        setChartData([]);
+      });
   }, []);
 
   return (
@@ -103,7 +111,9 @@ function Forecast() {
               />
 
               <Tooltip
-                formatter={(value) => `₹${Number(value).toLocaleString()}`}
+                formatter={(value) =>
+                  `₹${Number(value).toLocaleString()}`
+                }
               />
 
               <Area
