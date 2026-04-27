@@ -20,6 +20,7 @@ function Insights() {
           </div>
           <p className="font-body-sm text-on-surface-variant">Your spending is stable in the sense that rent is predictable every month, but your overall savings rate looks modest because discretionary expenses regularly stack up on top of fixed costs. The biggest concern is not one-off overspending — it’s the repeated pull from shopping, food delivery, travel, and short-term lifestyle costs, which makes your month-end cash flow tighter than it needs to be.</p>
         </div>
+      </div>
       
 
 
@@ -31,7 +32,7 @@ function Insights() {
             <p className="font-body-sm text-on-surface-variant"><b>Cut shopping spikes in half.</b> Your shopping spend is one of the largest non-rent categories, and the biggest wins come from months with sale-driven or impulse buys like Amazon, Myntra, and Flipkart. A realistic target is ₹2,500–₹4,000/month saved by delaying non-essential purchases by 48 hours and capping sale-day spending.</p>
             <p className="font-body-sm text-on-surface-variant"><b>Reduce food delivery frequency.</b> Food & Dining shows repeated Swiggy and Zomato usage, with a clear spike in higher-spend months. Switching just 3–4 orders per month to home-cooked meals can save about ₹1,200–₹2,000/month.</p>
             <p className="font-body-sm text-on-surface-variant"><b>Control travel and cab leakage.</b> Transportation and Travel both appear meaningfully in the data, especially cab rides, flight bookings, and short-stay travel costs. Replacing a few cab trips with public transport or planning travel earlier could save ₹1,000–₹2,500/month on average.</p>
-      
+      </div> 
 
       <div className="flex flex-col gap-4 mt-8">
         <div className="p-6 bg-surface-container-highest border-l-2 border-primary rounded-r-sm flex flex-col gap-2">
@@ -45,6 +46,7 @@ function Insights() {
           <p className="font-body-sm text-on-surface-variant">Set a weekly delivery cap instead of a monthly one, because the spending spikes are more visible when food orders cluster in a few weeks. You could also reserve one or two fixed “eat out” days and keep the rest of the week meal-prep based.</p>
         
         </div>
+      </div>
 
         <div className="p-6 bg-surface-container-high border-l-2 border-secondary rounded-r-sm flex flex-col gap-2">
           <div className="flex items-center gap-2">
