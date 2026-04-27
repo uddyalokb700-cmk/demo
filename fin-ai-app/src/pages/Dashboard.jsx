@@ -152,7 +152,7 @@ function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 p-6 bg-surface border border-white/5">
-          <h3 className="font-headline-md text-xl text-on-surface mb-6">Cashflow Trends</h3>
+          <h3 className="font-headline-md text-xl text-on-surface mb-6">Cashflow Trends Per Month</h3>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
