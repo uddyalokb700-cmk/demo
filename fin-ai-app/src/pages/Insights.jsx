@@ -61,7 +61,6 @@ function Insights() {
           <h3 className="font-headline-md text-xl text-on-surface">Positive Reinforcement</h3>
           <p className="font-body-sm text-on-surface-variant">You are consistently paying rent and handling recurring essentials on time, which shows strong baseline financial discipline. You also do have at least one healthy habit in the mix — your SIP mutual fund contribution indicates that you are already thinking beyond short-term spending.</p>
         </div>
-      </div>
     </main>
   );
 }
