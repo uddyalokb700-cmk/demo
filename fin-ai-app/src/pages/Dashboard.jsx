@@ -125,7 +125,7 @@ function Dashboard() {
           <span className="font-headline-xl text-4xl text-on-surface font-bold">₹{netWorth.toFixed(2)}</span>
           <div className="flex items-center gap-1 mt-4 text-primary">
             <span className="material-symbols-outlined text-[16px]">trending_up</span>
-            <span className="font-body-sm text-sm">Live from backend</span>
+            <span className="font-body-sm text-sm">+2.4% this month</span>
           </div>
         </div>
 
@@ -135,7 +135,7 @@ function Dashboard() {
           <span className="font-headline-xl text-4xl text-on-surface font-bold">₹{monthlySpend.toFixed(2)}</span>
           <div className="flex items-center gap-1 mt-4 text-secondary">
             <span className="material-symbols-outlined text-[16px]">trending_down</span>
-            <span className="font-body-sm text-sm">Backend average</span>
+            <span className="font-body-sm text-sm">-1.2% from last month</span>
           </div>
         </div>
 
@@ -155,7 +155,7 @@ function Dashboard() {
           <h3 className="font-headline-md text-xl text-on-surface mb-6">Cashflow Trends</h3>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorBalance" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#98FF98" stopOpacity={0.3}/>
