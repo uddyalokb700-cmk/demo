@@ -3,6 +3,80 @@ import React, { useEffect, useState } from 'react';
 const API = import.meta.env.VITE_API_URL;
 
 function Insights() {
+  const [loading, setLoading] = useState(true);
+  const [text, setText] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    loadSuggestions();
+  }, []);
+
+  const loadSuggestions = async () => {
+    try {
+      setLoading(true);
+      setError('');
+
+      const res = await fetch(`${API}/api/suggest?user_id=demo_user`);
+      const data = await res.json();
+
+      const suggestions =
+        data?.suggestions ||
+        data?.data?.suggestions ||
+        '';
+
+      setText(
+        typeof suggestions === 'string'
+          ? suggestions
+          : Array.isArray(suggestions)
+          ? suggestions.join('\n')
+          : ''
+      );
+    } catch (err) {
+      setError('Unable to load suggestions.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getSection = (title) => {
+    if (!text) return '';
+
+    const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    const regex = new RegExp(
+      `${escaped}[\\s\\S]*?(?=Overall Assessment|Top 3 Saving Opportunities|Category-Specific Tips|Next Month Action Plan|Positive Reinforcement|$)`,
+      'i'
+    );
+
+    const match = text.match(regex);
+    if (!match) return '';
+
+    return match[0]
+      .replace(new RegExp(escaped, 'i'), '')
+      .replace(/^[-:*#\s]+/, '')
+      .trim();
+  };
+
+  const overall =
+    getSection('Overall Assessment') ||
+    text.split('\n').slice(0, 4).join(' ');
+
+  const savings =
+    getSection('Top 3 Saving Opportunities') ||
+    '';
+
+  const category =
+    getSection('Category-Specific Tips') ||
+    '';
+
+  const nextPlan =
+    getSection('Next Month Action Plan') ||
+    '';
+
+  const positive =
+    getSection('Positive Reinforcement') ||
+    '';
+
   return (
     <main className="relative z-10 pt-24 md:pt-32 pb-32 md:pb-24 px-4 md:px-10 max-w-4xl mx-auto flex flex-col gap-8">
       <div className="flex flex-col gap-2 text-center items-center">
@@ -12,55 +86,86 @@ function Insights() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 mt-8">
-        <div className="p-6 bg-surface-container-highest border-l-2 border-primary rounded-r-sm flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-sm">stars</span>
-            <span className="font-label-lg text-primary text-xs uppercase tracking-widest">Overall Assessment</span>
-          </div>
-          <p className="font-body-sm text-on-surface-variant">Your spending is stable in the sense that rent is predictable every month, but your overall savings rate looks modest because discretionary expenses regularly stack up on top of fixed costs. The biggest concern is not one-off overspending — it’s the repeated pull from shopping, food delivery, travel, and short-term lifestyle costs, which makes your month-end cash flow tighter than it needs to be.</p>
+      {loading && (
+        <div className="p-6 bg-surface-container-high border border-white/10 rounded-sm">
+          <p className="font-body-sm text-on-surface-variant">
+            Loading Gemini suggestions...
+          </p>
         </div>
-      </div>
-      
+      )}
 
-
-      <div className="p-6 bg-surface-container-high border-l-2 border-secondary rounded-r-sm flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-secondary text-sm">trending_up</span>
-            <span className="font-label-lg text-secondary text-xs uppercase tracking-widest">Top 3 Saving Opportunities</span>
-          </div>
-            <p className="font-body-sm text-on-surface-variant"><b>Cut shopping spikes in half.</b> Your shopping spend is one of the largest non-rent categories, and the biggest wins come from months with sale-driven or impulse buys like Amazon, Myntra, and Flipkart. A realistic target is ₹2,500–₹4,000/month saved by delaying non-essential purchases by 48 hours and capping sale-day spending.</p>
-            <p className="font-body-sm text-on-surface-variant"><b>Reduce food delivery frequency.</b> Food & Dining shows repeated Swiggy and Zomato usage, with a clear spike in higher-spend months. Switching just 3–4 orders per month to home-cooked meals can save about ₹1,200–₹2,000/month.</p>
-            <p className="font-body-sm text-on-surface-variant"><b>Control travel and cab leakage.</b> Transportation and Travel both appear meaningfully in the data, especially cab rides, flight bookings, and short-stay travel costs. Replacing a few cab trips with public transport or planning travel earlier could save ₹1,000–₹2,500/month on average.</p>
-      </div> 
-
-      <div className="flex flex-col gap-4 mt-8">
-        <div className="p-6 bg-surface-container-highest border-l-2 border-primary rounded-r-sm flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-sm">stars</span>
-            <span className="font-label-lg text-primary text-xs uppercase tracking-widest">Category-Specific Tips</span>
-          </div>
-          <h3 className="font-headline-md text-xl text-on-surface">Shopping</h3>
-          <p className="font-body-sm text-on-surface-variant">Create a 72-hour rule for all non-essential purchases above ₹1,500, because your data shows that shopping is a recurring high-value category rather than a rare exception. Also, split shopping into “need now” and “wait till next month” buckets so sale events don’t automatically become spending events.</p>
-          <h3 className="font-headline-md text-xl text-on-surface">Food & Dining</h3>
-          <p className="font-body-sm text-on-surface-variant">Set a weekly delivery cap instead of a monthly one, because the spending spikes are more visible when food orders cluster in a few weeks. You could also reserve one or two fixed “eat out” days and keep the rest of the week meal-prep based.</p>
-        
+      {error && (
+        <div className="p-6 bg-surface-container-high border border-red-500/30 rounded-sm">
+          <p className="font-body-sm text-on-surface-variant">{error}</p>
         </div>
-      </div>
+      )}
 
-        <div className="p-6 bg-surface-container-high border-l-2 border-secondary rounded-r-sm flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-secondary text-sm">trending_up</span>
-            <span className="font-label-lg text-secondary text-xs uppercase tracking-widest">Next Month Action Plan</span>
+      {!loading && (
+        <>
+          <div className="flex flex-col gap-4 mt-8">
+            <div className="p-6 bg-surface-container-highest border-l-2 border-primary rounded-r-sm flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-sm">stars</span>
+                <span className="font-label-lg text-primary text-xs uppercase tracking-widest">
+                  Overall Assessment
+                </span>
+              </div>
+              <p className="font-body-sm text-on-surface-variant whitespace-pre-line">
+                {overall || 'Suggestions loaded successfully.'}
+              </p>
+            </div>
           </div>
-            <p className="font-body-sm text-on-surface-variant">Keep total discretionary spending below your forecast band by setting a hard ceiling on shopping and restaurant expenses.</p>
-            <p className="font-body-sm text-on-surface-variant">Limit food delivery to a fixed number of orders per week and track whether the total stays below this month’s trend.</p>
-            <p className="font-body-sm text-on-surface-variant">Move at least one cab ride or impulse purchase each week into a “skip or delay” decision so you build savings without feeling restricted.</p>
-      
-        
-          <h3 className="font-headline-md text-xl text-on-surface">Positive Reinforcement</h3>
-          <p className="font-body-sm text-on-surface-variant">You are consistently paying rent and handling recurring essentials on time, which shows strong baseline financial discipline. You also do have at least one healthy habit in the mix — your SIP mutual fund contribution indicates that you are already thinking beyond short-term spending.</p>
-        </div>
+
+          <div className="p-6 bg-surface-container-high border-l-2 border-secondary rounded-r-sm flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-secondary text-sm">trending_up</span>
+              <span className="font-label-lg text-secondary text-xs uppercase tracking-widest">
+                Top 3 Saving Opportunities
+              </span>
+            </div>
+
+            <p className="font-body-sm text-on-surface-variant whitespace-pre-line">
+              {savings || text}
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4 mt-8">
+            <div className="p-6 bg-surface-container-highest border-l-2 border-primary rounded-r-sm flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-sm">stars</span>
+                <span className="font-label-lg text-primary text-xs uppercase tracking-widest">
+                  Category-Specific Tips
+                </span>
+              </div>
+
+              <p className="font-body-sm text-on-surface-variant whitespace-pre-line">
+                {category || 'Smart category recommendations generated from your spending behaviour.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 bg-surface-container-high border-l-2 border-secondary rounded-r-sm flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-secondary text-sm">trending_up</span>
+              <span className="font-label-lg text-secondary text-xs uppercase tracking-widest">
+                Next Month Action Plan
+              </span>
+            </div>
+
+            <p className="font-body-sm text-on-surface-variant whitespace-pre-line">
+              {nextPlan || 'Use forecast insights to maintain budget discipline next month.'}
+            </p>
+
+            <h3 className="font-headline-md text-xl text-on-surface">
+              Positive Reinforcement
+            </h3>
+
+            <p className="font-body-sm text-on-surface-variant whitespace-pre-line">
+              {positive || 'You are already taking meaningful steps toward stronger financial health.'}
+            </p>
+          </div>
+        </>
+      )}
     </main>
   );
 }
