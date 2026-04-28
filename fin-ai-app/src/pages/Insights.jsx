@@ -53,7 +53,7 @@ function Insights() {
 
     return match[0]
       .replace(new RegExp(escaped, 'i'), '')
-      .replace(/^[-:*#\s]+/, '')
+      .replace(/^[\s\-:*#]+/, '')
       .trim();
   };
 
